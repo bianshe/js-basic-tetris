@@ -1,17 +1,29 @@
-.grid {
-  background-color: yellow;
+.container {
   display: flex;
-  flex-wrap: wrap;
+}
+
+.grid {
   height: 360px;
   width: 200px;
 }
 
-.grid div {
-  /*background-color: red;*/
+.grid, .mini-grid {
+  background-color: yellow;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.grid div, .mini-grid div {
   height: 20px;
   width: 20px;
 }
 
 .tetromino {
   background-color: blue;
+}
+
+.mini-grid {
+  height: 80px;
+  margin-left: 50px;
+  width: 80px;
 }

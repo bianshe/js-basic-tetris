@@ -1,6 +1,22 @@
+body {
+  background-color: #f2f2f2;
+  color: #00b3b3;
+
+}
+
 .container {
-  background-color: white;
+  background-color: #f2f2f2;
   display: flex;
+}
+
+.container * {
+  font-family: "Lucida Console", Courier, monospace;
+}
+
+.game-info {
+  background-color: #f2f2f2;
+  margin: 0 20px;
+  text-align: center;
 }
 
 .grid {
@@ -22,16 +38,29 @@
   width: 18px;
 }
 
-.tetromino {
-  background-color: blue;
-}
-
 .mini-grid {
   height: 80px;
   margin-left: 50px;
   width: 80px;
 }
 
-.grid .taken {
+.grid {
   background-color: white;
+}
+
+.grid .taken {
+  background-color: #f2f2f2;
+  border-color: #f2f2f2;
+}
+
+.tetromino .taken {
+  border-color: white;
+}
+
+button {
+  background-color: #00b3b3;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  padding: 5px 5px;
 }

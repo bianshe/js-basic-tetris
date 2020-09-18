@@ -7,12 +7,11 @@
   <script src="app.js"></script>
   <link rel="stylesheet" href="style.css">
   </link>
+  <script src="https://kit.fontawesome.com/37bcc52a28.js" crossorigin="anonymous"></script>
   <title>Tetris</title>
 </head>
 
 <body>
-  <h3>Score: <span id="score">0</span></h3>
-  <button id="start-button">Start/Pause</button>
   <div class="container">
     <div class="grid">
       <div></div>
@@ -207,24 +206,30 @@
       <div class="taken"></div>
       <div class="taken"></div>
     </div>
-
-    <div class="mini-grid">
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
+    <div class="game-info">
+      <h3 id="game-over"></h3>
+      <h3>Score: <span id="score">0</span></h3>
+      <button id="start-button"><i class="fas fa-play"></i> Start</button>
+      <button id="restart-button"><i class="fas fa-redo"></i> Restart</button>
+      <h3>Next:</h3>
+      <div class="mini-grid">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
     </div>
   </div>
 </body>

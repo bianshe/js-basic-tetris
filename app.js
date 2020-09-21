@@ -21,25 +21,25 @@ document.addEventListener('DOMContentLoaded', () => {
     '#ffcc00'
   ];
 
+  const iTetromino = [
+    [1, width + 1, width * 2 + 1, width * 3 + 1],
+    [width, width + 1, width + 2, width + 3],
+    [1, width + 1, width * 2 + 1, width * 3 + 1],
+    [width, width + 1, width + 2, width + 3]
+  ];
+
   const jTetromino = [
-    [1, width + 1, width * 2 + 1, 2],
+    [0, width, width + 1, width + 2],
+    [1, 2, width + 1, width * 2 + 1],
     [width, width + 1, width + 2, width * 2 + 2],
-    [1, width + 1, width * 2 + 1, width * 2],
-    [width, width * 2, width * 2 + 1, width * 2 + 2]
+    [1, width + 1, width * 2, width * 2 + 1]
   ];
 
-  const zTetromino = [
-    [width * 2, width * 2 + 1, width + 1, width + 2],
-    [0, width, width + 1, width * 2 + 1],
-    [width * 2, width * 2 + 1, width + 1, width + 2],
-    [0, width, width + 1, width * 2 + 1]
-  ];
-
-  const tTetromino = [
-    [1, width, width + 1, width + 2],
-    [1, width + 1, width + 2, width * 2 + 1],
-    [width, width + 1, width + 2, width * 2 + 1],
-    [1, width, width + 1, width * 2 + 1]
+  const lTetromino = [
+    [2, width, width + 1, width + 2],
+    [1, width + 1, width * 2 + 1, width * 2 + 2],
+    [width, width + 1, width + 2, width * 2],
+    [0, 1, width + 1, width * 2 + 1]
   ];
 
   const oTetromino = [
@@ -49,32 +49,55 @@ document.addEventListener('DOMContentLoaded', () => {
     [0, 1, width, width + 1]
   ];
 
-  const iTetromino = [
-    [1, width + 1, width * 2 + 1, width * 3 + 1],
-    [width, width + 1, width + 2, width + 3],
-    [1, width + 1, width * 2 + 1, width * 3 + 1],
-    [width, width + 1, width + 2, width + 3]
+  const sTetromino = [
+    [1, 2, width, width + 1],
+    [1, width + 1, width + 2, width * 2 + 2],
+    [width + 1, width + 2, width * 2, width * 2 + 1],
+    [1, width, width + 1, width * 2]
   ];
 
-  const lTetromino = [
-    [width, width + 1, width + 2, 2],
-    [1, width + 1, width * 2 + 1, width * 2 + 2],
-    [width * 2, width, width + 1, width + 2],
-    [0, 1, width + 1, width * 2 + 1]
+  const tTetromino = [
+    [1, width, width + 1, width + 2],
+    [1, width + 1, width + 2, width * 2 + 1],
+    [width, width + 1, width + 2, width * 2 + 1],
+    [1, width, width + 1, width * 2 + 1]
   ];
 
-  const theTetrominoes = [lTetromino, zTetromino, tTetromino, oTetromino, iTetromino, jTetromino];
+  const zTetromino = [
+    [0, 1, width + 1, width + 2],
+    [2, width + 1, width + 2, width * 2 + 1],
+    [width, width + 1, width * 2 + 1, width * 2 + 2],
+    [1, width, width + 1, width * 2]
+  ];
+
+  const theTetrominoes = [iTetromino, jTetromino, lTetromino, oTetromino, sTetromino, tTetromino, zTetromino,];
+
+  const displaySquares = document.querySelectorAll('.mini-grid div');
+  const displayWidth = 4;
+  const displayIndex = 0;
+
+  const upNextTetromino = [
+    [1, displayWidth + 1, displayWidth * 2 + 1, displayWidth * 3 + 1],
+    [0, displayWidth, displayWidth + 1, displayWidth + 2],
+    [2, displayWidth, displayWidth + 1, displayWidth + 2],
+    [0, 1, displayWidth, displayWidth + 1],
+    [1, 2, displayWidth, displayWidth + 1],
+    [1, displayWidth, displayWidth + 1, displayWidth + 2],
+    [0, 1, displayWidth + 1, displayWidth + 2]
+  ]
 
   let isOver = false;
   let isPaused = true;
   let currentPosition = 4;
-  //let currentRotation = Math.floor(Math.random() * 4);
   let currentRotation = 0;
   let random = Math.floor(Math.random() * theTetrominoes.length);
   let nextRandom = 0;
   let randomColor = Math.floor(Math.random() * colors.length);
   let nextRandomColor = Math.floor(Math.random() * colors.length);
   let current = theTetrominoes[random][currentRotation];
+
+  document.addEventListener('keyup', control);
+  startBtn.innerHTML = "<i class='fas fa-play'></i> Start";
 
   function draw() {
     current.forEach(index => {
@@ -89,8 +112,6 @@ document.addEventListener('DOMContentLoaded', () => {
       squares[currentPosition + index].style.backgroundColor = "";
     })
   }
-
-  //timerId = setInterval(moveDown, 1000);
 
   function control(e) {
     if(!isPaused && !isOver){
@@ -109,12 +130,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  document.addEventListener('keyup', control);
-  startBtn.innerHTML = "<i class='fas fa-play'></i> Start";
-
   function moveDown() {
-    gameOver();
-    if(!isPaused && !isOver){
+    if(!isPaused && !isOver && timerId){
       undraw();
       currentPosition += width;
       draw();
@@ -129,12 +146,14 @@ document.addEventListener('DOMContentLoaded', () => {
       nextRandom = Math.floor(Math.random() * theTetrominoes.length);
       randomColor = nextRandomColor;
       nextRandomColor = Math.floor(Math.random() * colors.length);
-      current = theTetrominoes[random][currentRotation];
+      current = theTetrominoes[random][0];
       currentPosition = 4;
       addScore();
-      draw();
-      displayShape();
       gameOver();
+      if(!isOver) {
+        draw();
+        displayShape();
+      }
     }
   }
 
@@ -169,7 +188,6 @@ document.addEventListener('DOMContentLoaded', () => {
       currentRotation = 0;
     }
     current = theTetrominoes[random][currentRotation];
-    //check for out of field before rotate
     if(current.some(index => (currentPosition + index) % width === 0)
     && current.some(index => (currentPosition + index) % width === width - 1)) {
       if(currentRotation === 0) {
@@ -182,21 +200,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     draw();
   }
-
-
-  const displaySquares = document.querySelectorAll('.mini-grid div');
-  const displayWidth = 4;
-  const displayIndex = 0;
-
-
-  const upNextTetromino = [
-    [1, displayWidth + 1, displayWidth * 2 + 1, 2],
-    [displayWidth * 2, displayWidth * 2 + 1, displayWidth + 1, displayWidth + 2],
-    [1, displayWidth, displayWidth + 1, displayWidth + 2],
-    [0, 1, displayWidth, displayWidth + 1],
-    [1, displayWidth + 1, displayWidth * 2 + 1, displayWidth * 3 + 1],
-    [displayWidth, displayWidth + 1, displayWidth + 2, 2]
-  ]
 
   function displayShape() {
     displaySquares.forEach(square => {
@@ -229,8 +232,6 @@ document.addEventListener('DOMContentLoaded', () => {
     else {
       draw();
       timerId = setInterval(moveDown, 1000);
-      //nextRandom = Math.floor(Math.random() * theTetrominoes.length);
-      //nextRandomColor = Math.floor(Math.random() * colors.length);
       displayShape();
     }
   })
@@ -255,7 +256,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function gameOver() {
     if(current.some(index => squares[currentPosition + index].classList.contains('taken'))) {
-      //scoreDisplay.innerHTML = "end";
       clearInterval(timerId);
       timerId = null;
       isOver = true;

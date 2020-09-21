@@ -40,7 +40,7 @@ body {
 
 .mini-grid {
   height: 80px;
-  margin-left: 50px;
+  margin: 0 auto;
   width: 80px;
 }
 
@@ -63,4 +63,5 @@ button {
   border-radius: 5px;
   color: white;
   padding: 5px 5px;
+  width: 90px;
 }
